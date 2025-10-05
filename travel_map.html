@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Travel Recommendations Map</title>
+    <meta charset="utf-8" />
+    <style>
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+      .popup-content {
+        font-family: Arial, sans-serif;
+      }
+      .popup-content img {
+        width: 100%;
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      #controls {
+        margin: 10px;
+        background: #222;
+        color: white
+        padding: 6px;
+        border-radius: 4px;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 5;
+      }
+
+      #controls label {
+        color: white
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4qAthbTwpDmixObMoieB9BOoyAVCoeV4"></script>
+    <script>
+      let map;
+      let outlineVisible = false;
+
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 2.3,
+          center: {  lat: 25, lng: 20},
+          mapTypeId: "terrain",
+        });
+
+        // Create ONE shared InfoWindow
+        const infoWindow = new google.maps.InfoWindow();
+
+        // -------------------------------
+        // List of cities with links & photos
+        // -------------------------------
+        const cities = [
+          { name: "Aspen + Rockies", lat: 39.1911, lng: -106.8175, url: "https://octavetravel.com/aspen", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_0219.JPEG/:/cr=t:0%25,l:8.26%25,w:75%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Olympic Peninsula", lat: 47.802109, lng: -123.604355, url: "https://octavetravel.com/olympic-peninsula", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_2686.JPEG/:/cr=t:18.54%25,l:18.87%25,w:60.48%25,h:80.64%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Utah Central", lat: 38.5733, lng: -109.5498, url: "https://octavetravel.com/utah-central", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_0493.JPEG/:/cr=t:0%25,l:10.65%25,w:75%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Utah South", lat: 37.1889, lng: -113.0020, url: "https://octavetravel.com/utah-south", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_2158.JPEG/:/cr=t:3.8%25,l:0%25,w:66.96%25,h:89.28%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Yosemite", lat: 37.7456, lng: -119.5936, url: "https://octavetravel.com/yosemite", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/Yosemite%20Falls%20Reflection%201.JPEG/:/cr=t:2.64%25,l:10.95%25,w:68.99%25,h:89.29%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Portugal", lat: 38.7169, lng: -9.139, url: "https://octavetravel.com/portugal", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_2571.JPEG/:/cr=t:8.46%25,l:16.23%25,w:66.96%25,h:89.29%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Slovenia", lat: 46.0569, lng: 14.5058, url: "https://octavetravel.com/slovenia", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_0615b.JPEG/:/cr=t:20.84%25,l:15.71%25,w:70.42%25,h:52.82%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Italy Lakes", lat: 45.984, lng: 9.257, url: "https://octavetravel.com/italy-lakes-1", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_0513b.JPEG/:/cr=t:0%25,l:12.5%25,w:75%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Italy Dolomites", lat: 46.4983, lng: 11.3548, url: "https://octavetravel.com/italy-dolomites", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_1189.JPEG/:/cr=t:12.5%25,l:0%25,w:100%25,h:75%25/rs=w:730,h:730,cg:true" },
+          { name: "Croatia", lat: 43.5081, lng: 16.4402, url: "https://octavetravel.com/croatia", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_1135.JPEG/:/cr=t:0%25,l:18.37%25,w:75%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Norway", lat: 59.9139, lng: 10.7522, url: "https://octavetravel.com/norway", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/Bryggen%202.jpg/:/cr=t:0%25,l:18.04%25,w:75%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Switzerland", lat: 47.3769, lng: 8.5417, url: "https://octavetravel.com/switzerland", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/Matterhorn%20Hiking%20%26%20Biking%201.JPG/:/cr=t:0%25,l:10.86%25,w:66.68%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Canada Rockies", lat: 51.1784, lng: -115.5708, url: "https://octavetravel.com/canada-rockies", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/Peyto%20Lake%201.JPG/:/cr=t:4.52%25,l:22.84%25,w:70.19%25,h:76.92%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Canada Quebec", lat: 45.5019, lng: -73.5674, url: "https://octavetravel.com/quebec", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_3036.JPEG/:/cr=t:0%25,l:11.25%25,w:71.87%25,h:100%25/rs=w:730,h:730,cg:true" },
+          { name: "Acadia", lat: 44.3876, lng: -68.2039, url: "https://octavetravel.com/acadia", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_1387.JPG/:/cr=t:5.78%25,l:19.04%25,w:56.51%25,h:84.75%25/rs=w:730,h:730,cg:true,m" },
+          { name: "Joshua Tree", lat: 33.8818, lng: -115.9006, url: "https://octavetravel.com/joshua-tree", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_1755.JPEG/:/cr=t:3.87%25,l:0%25,w:100%25,h:84.21%25/rs=w:730,h:730,cg:true" }
+        ];
+
+    // Create city markers
+    cities.forEach((city) => {
+      const marker = new google.maps.Marker({
+        position: { lat: city.lat, lng: city.lng },
+        map,
+        title: city.name,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 5,
+          fillColor: "#cd853f",
+          fillOpacity: 1,
+          strokeColor: "white",
+          strokeWeight: 1,
+        },
+      });
+
+      marker.addListener("click", () => {
+        // Close any previously open       InfoWindow
+      infoWindow.close();
+
+        infoWindow.setContent(`
+          <div class="popup-content">
+            <h3>${city.name}</h3>
+            <img src="${city.photo}" alt="${city.name}" style="width:200px;height:auto;">
+            <a href="${city.url}" target="_blank">DISCOVER</a>
+          </div>
+        `);
+        infoWindow.open(map, marker);
+      });
+    });
+
+    // Close InfoWindow when clicking anywhere on the map
+    map.addListener("click", () => {
+      infoWindow.close();
+    });
+
+        // -------------------------------
+        // Outline countries visited
+        // -------------------------------
+        map.data.loadGeoJson("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json");
+
+        const visitedCountries = [
+"Argentina",
+"Australia",
+"Austria",
+"Bahamas",
+"Belgium",
+"Belize",
+"Canada",
+"China",
+"Croatia",
+"Denmark",
+"France",
+"Germany",
+"Italy",
+"Ireland",
+"Japan",
+"Liechtenstein",
+"Luxembourg",
+"Malta",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Portugal",
+"Puerto Rico",
+"Singapore",
+"Slovenia",
+"Spain",
+"Switzerland",
+"Turkey",
+"United Kingdom",
+"United States of America",
+"Wales"
+        ];
+
+        function styleFeature(feature) {
+          const name = feature.getProperty("name");
+          const isVisited = visitedCountries.includes(name);
+          return {
+            strokeColor: isVisited && outlineVisible ? "black" : "grey",
+            strokeWeight: isVisited && outlineVisible ? 1 : 0,
+            fillOpacity: 0,
+          };
+        }
+        // Apply initial style
+        map.data.setStyle(styleFeature);
+
+        // Toggle function
+        window.toggleCountryOutline = function(checked) {
+          outlineVisible = checked;
+          map.data.setStyle(styleFeature);
+        };
+      }
+    </script>
+  </head>
+  <body onload="initMap()">
+      <div id="controls">
+         <label>
+           <input type="checkbox" onchange="toggleCountryOutline(this.checked)">
+           Visited Countries [outlined]
+         </label>
+    </div>
+    <div id="map"></div>
+  </body>
+</html
