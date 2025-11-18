@@ -149,7 +149,7 @@
         ];
 
         function styleFeature(feature) {
-          const name = feature.getProperty("ADMIN");
+          const name = feature.getProperty("name");
           const isVisited = visitedCountries.includes(name);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
@@ -179,3 +179,4 @@
   </body>
 
 </html
+
