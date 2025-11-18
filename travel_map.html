@@ -112,7 +112,7 @@
         // -------------------------------
         // Outline countries visited
         // -------------------------------
-        map.data.loadGeoJson("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json");
+        map.data.loadGeoJson("https://datahub.io/core/geo-countries/r/countries.geojson");
 
         const visitedCountries = [
 "Argentina",
@@ -149,7 +149,7 @@
         ];
 
         function styleFeature(feature) {
-          const name = feature.getProperty("name");
+          const name = feature.getProperty("ADMIN");
           const isVisited = visitedCountries.includes(name);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
@@ -177,4 +177,5 @@
     </div>
     <div id="map"></div>
   </body>
+
 </html
