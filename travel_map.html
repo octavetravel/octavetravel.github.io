@@ -116,12 +116,12 @@
         map.data.loadGeoJson("https://map.octavetravel.com/countries.geojson.txt");
 
         const visitedCountries = [
-          "ARG", "AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "CHN", "DEU", "DNK", "ESP", "FRA", "GBR", "HRV", "IRL", "ITA", "JPN", "LUX", "MLT", "NLD", "NOR", "NZL", "PRT", "SGP", "SVN", "TUR", "USA"
+          "Argentina", "Australia", "Austria", "Belgium", "Canada", "Chile", "China", "Croatia", "Denmark", "France", "Germany", "Ireland", "Italy", "Japan", "Luxembourg", "Malta", "Netherlands", "New Zealand", "Norway", "Portugal", "Singapore", "Slovenia", "Spain", "Switzerland", "Turkey", "United Kingdom", "United States of America"
         ];
 
         function styleFeature(feature) {
-          const iso = feature.getProperty("ISO3166-1-Alpha-3");
-          const isVisited = visitedCountries.includes(iso);
+          const name = feature.getProperty("name");
+          const isVisited = visitedCountries.includes(name);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
             strokeWeight: isVisited && outlineVisible ? 1 : 0,
@@ -149,4 +149,5 @@
     <div id="map"></div>
   </body>
 </html>
+
 
