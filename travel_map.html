@@ -113,46 +113,46 @@
         // -------------------------------
         // Outline countries visited
         // -------------------------------
-        map.data.loadGeoJson("https://datahub.io/core/geo-countries/r/countries.geojson",
-            null,
-            function () {
-            map.data.setStyle(styleFeature);
-            }
-        );
+        map.data.loadGeoJson("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json");
 
         const visitedCountries = [
-          "ARG",
-          "AUS",
-          "AUT",
-          "BEL",
-          "CAN",
-          "CHE",
-          "CHL",
-          "CHN",
-          "DEU",
-          "DNK",
-          "ESP",
-          "FRA",
-          "GBR",
-          "HRV",
-          "IRL",
-          "ITA",
-          "JPN",
-          "LUX",
-          "MLT",
-          "NLD",
-          "NOR",
-          "NZL",
-          "PRT",
-          "SGP",
-          "SVN",
-          "TUR",
-          "USA"
+"Argentina",
+"Australia",
+"Austria",
+"Bahamas",
+"Belgium",
+"Belize",
+"Canada",
+"Chile",
+"China",
+"Croatia",
+"Denmark",
+"France",
+"Germany",
+"Italy",
+"Ireland",
+"Japan",
+"Liechtenstein",
+"Luxembourg",
+"Malta",
+"Netherlands",
+"New Zealand",
+"Norway",
+"Portugal",
+"Puerto Rico",
+"Singapore",
+"Slovenia",
+"Spain",
+"Switzerland",
+"Turkey",
+"United Kingdom",
+"United States of America",
+"Wales"
         ];
 
         function styleFeature(feature) {
-          const iso = feature.getProperty("ISO3166-1-Alpha-3");
-          const isVisited = visitedCountries.includes(iso);
+          const name = feature.getProperty("name");
+          const isVisited = visitedCountries.includes(name);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
             strokeWeight: isVisited && outlineVisible ? 1 : 0,
@@ -179,15 +179,4 @@
     </div>
     <div id="map"></div>
   </body>
-
-</html
-
-
-
-
-
-
-
-
-
-
+</html>
