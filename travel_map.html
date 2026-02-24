@@ -71,7 +71,7 @@
           { name: "Canada Quebec", lat: 45.5019, lng: -73.5674, url: "https://octavetravel.com/quebec", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_3036.JPEG/:/cr=t:0%25,l:11.25%25,w:71.87%25,h:100%25/rs=w:730,h:730,cg:true" },
           { name: "Acadia", lat: 44.3876, lng: -68.2039, url: "https://octavetravel.com/acadia", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_1387.JPG/:/cr=t:5.78%25,l:19.04%25,w:56.51%25,h:84.75%25/rs=w:730,h:730,cg:true,m" },
           { name: "Joshua Tree", lat: 33.8818, lng: -115.9006, url: "https://octavetravel.com/joshua-tree", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_1755.JPEG/:/cr=t:3.87%25,l:0%25,w:100%25,h:84.21%25/rs=w:730,h:730,cg:true" },
-          { name: "Patagonia", lat: -50.3375, lng: -72.2645, url: "https://octavetravel.com/patagonia", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_5366.JPEG/:/cr=t:3.87%25,l:0%25,w:100%25,h:84.21%25/rs=w:730,h:730,cg:true" }
+          { name: "Patagonia", lat: -49.3284, lng: -72.8725, url: "https://octavetravel.com/patagonia", photo: "https://img1.wsimg.com/isteam/ip/d9acaa73-588b-4870-8936-d6b0864ca508/IMG_5366.JPEG/:/cr=t:3.87%25,l:0%25,w:100%25,h:84.21%25/rs=w:730,h:730,cg:true" }
         ];
 
     // Create city markers
@@ -116,43 +116,38 @@
         map.data.loadGeoJson("https://datahub.io/core/geo-countries/r/countries.geojson");
 
         const visitedCountries = [
-"Argentina",
-"Australia",
-"Austria",
-"Bahamas",
-"Belgium",
-"Belize",
-"Canada",
-"Chile",
-"China",
-"Croatia",
-"Denmark",
-"France",
-"Germany",
-"Italy",
-"Ireland",
-"Japan",
-"Liechtenstein",
-"Luxembourg",
-"Malta",
-"Netherlands",
-"New Zealand",
-"Norway",
-"Portugal",
-"Puerto Rico",
-"Singapore",
-"Slovenia",
-"Spain",
-"Switzerland",
-"Turkey",
-"United Kingdom",
-"United States of America",
-"Wales"
+          "ARG",
+          "AUS",
+          "AUT",
+          "BEL",
+          "CAN",
+          "CHE",
+          "CHL",
+          "CHN",
+          "DEU",
+          "DNK",
+          "ESP",
+          "FRA",
+          "GBR",
+          "HRV",
+          "IRL",
+          "ITA",
+          "JPN",
+          "LUX",
+          "MLT",
+          "NLD",
+          "NOR",
+          "NZL",
+          "PRT",
+          "SGP",
+          "SVN",
+          "TUR",
+          "USA"
         ];
 
         function styleFeature(feature) {
-          const name = feature.getProperty("name");
-          const isVisited = visitedCountries.includes(name);
+          const iso = feature.getProperty("ISO_A3");
+          const isVisited = visitedCountries.includes(iso);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
             strokeWeight: isVisited && outlineVisible ? 1 : 0,
@@ -181,6 +176,7 @@
   </body>
 
 </html
+
 
 
 
