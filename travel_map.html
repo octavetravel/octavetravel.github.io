@@ -146,7 +146,7 @@
         ];
 
         function styleFeature(feature) {
-          const iso = feature.getProperty("ISO_A3");
+          const iso = feature.getProperty("ISO3166-1-Alpha-3");
           const isVisited = visitedCountries.includes(iso);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
@@ -176,6 +176,7 @@
   </body>
 
 </html
+
 
 
 
