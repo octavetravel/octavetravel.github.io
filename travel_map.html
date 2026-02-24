@@ -20,7 +20,7 @@
       #controls {
         margin: 10px;
         background: #222;
-        color: white
+        color: white;
         padding: 6px;
         border-radius: 4px;
         font-family: Arial, sans-serif;
@@ -33,7 +33,7 @@
       }
 
       #controls label {
-        color: white
+        color: white;
     </style>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4qAthbTwpDmixObMoieB9BOoyAVCoeV4"></script>
@@ -42,7 +42,7 @@
       let outlineVisible = false;
 
       function initMap() {
-        const map = new google.maps.Map(document.getElementById("map"), {
+        map = new google.maps.Map(document.getElementById("map"), {
           zoom: 2.3,
           center: {  lat: 23, lng: 20},
           mapTypeId: "terrain",
@@ -176,6 +176,7 @@
   </body>
 
 </html
+
 
 
 
