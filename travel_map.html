@@ -113,7 +113,12 @@
         // -------------------------------
         // Outline countries visited
         // -------------------------------
-        map.data.loadGeoJson("https://datahub.io/core/geo-countries/r/countries.geojson");
+        map.data.loadGeoJson("https://datahub.io/core/geo-countries/r/countries.geojson",
+            null,
+            function () {
+            map.data.setStyle(styleFeature);
+            }
+        );
 
         const visitedCountries = [
           "ARG",
@@ -176,6 +181,7 @@
   </body>
 
 </html
+
 
 
 
