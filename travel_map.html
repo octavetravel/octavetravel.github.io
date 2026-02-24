@@ -113,46 +113,15 @@
         // -------------------------------
         // Outline countries visited
         // -------------------------------
-        map.data.loadGeoJson("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json");
+        map.data.loadGeoJson("https://map.octavetravel.com/countries.geojson.txt");
 
         const visitedCountries = [
-"Argentina",
-"Australia",
-"Austria",
-"Bahamas",
-"Belgium",
-"Belize",
-"Canada",
-"Chile",
-"China",
-"Croatia",
-"Denmark",
-"France",
-"Germany",
-"Italy",
-"Ireland",
-"Japan",
-"Liechtenstein",
-"Luxembourg",
-"Malta",
-"Netherlands",
-"New Zealand",
-"Norway",
-"Portugal",
-"Puerto Rico",
-"Singapore",
-"Slovenia",
-"Spain",
-"Switzerland",
-"Turkey",
-"United Kingdom",
-"United States of America",
-"Wales"
+          "ARG", "AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "CHN", "DEU", "DNK", "ESP", "FRA", "GBR", "HRV", "IRL", "ITA", "JPN", "LUX", "MLT", "NLD", "NOR", "NZL", "PRT", "SGP", "SVN", "TUR", "USA"
         ];
 
         function styleFeature(feature) {
-          const name = feature.getProperty("name");
-          const isVisited = visitedCountries.includes(name);
+          const iso = feature.getProperty("ISO3166-1-Alpha-3");
+          const isVisited = visitedCountries.includes(iso);
           return {
             strokeColor: isVisited && outlineVisible ? "black" : "grey",
             strokeWeight: isVisited && outlineVisible ? 1 : 0,
@@ -180,3 +149,4 @@
     <div id="map"></div>
   </body>
 </html>
+
