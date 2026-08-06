@@ -74,10 +74,10 @@
       let map;
 
       // --- Show outlines by default? ---
-      // false = map loads with dots only; visitor checks the box to reveal travels.
+      // true = map loads with dots only; visitor checks the box to reveal travels.
       // To show outlines on load instead: change this to true AND add the word
       // checked  inside the <input ...> tag near the bottom of this file.
-      let outlineVisible = false;
+      let outlineVisible = true;
 
       function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
