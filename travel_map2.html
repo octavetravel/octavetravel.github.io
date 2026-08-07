@@ -77,6 +77,10 @@
       let outlineVisible = true;
 
       function initMap() {
+      // Sync JS state directly with the checkbox's actual DOM state on load
+        const checkbox = document.getElementById("outline-checkbox");
+        outlineVisible = checkbox ? checkbox.checked : true;
+        
         map = new google.maps.Map(document.getElementById("map"), {
           zoom: 2.3,
           center: {  lat: 23, lng: 20},
@@ -181,7 +185,12 @@
           <span class="dot"></span> Featured
         </div>
         <label>
-          <input type="checkbox" checked onchange="toggleCountryOutline(this.checked)">
+          <input type="checkbox" 
+            id="outline-checkbox"
+            checked
+            autocomplete="off"
+            onchange="toggleCountryOutline(this.checked)"
+          >
           Visited
         </label>
       </div>
