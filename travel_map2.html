@@ -73,10 +73,7 @@
     <script>
       let map;
 
-      // --- Show outlines by default? ---
-      // true = map loads with dots only; visitor checks the box to reveal travels.
-      // To show outlines on load instead: change this to true AND add the word
-      // checked  inside the <input ...> tag near the bottom of this file.
+      // --- Show outlines by default ---
       let outlineVisible = true;
 
       function initMap() {
@@ -181,11 +178,11 @@
   <body onload="initMap()">
       <div id="controls">
         <div class="legend">
-          <span class="dot"></span> Gold Dots = Featured
+          <span class="dot"></span> Featured
         </div>
         <label>
           <input type="checkbox" onchange="toggleCountryOutline(this.checked)">
-          Outline = Visited
+          Visited
         </label>
       </div>
     <div id="map"></div>
