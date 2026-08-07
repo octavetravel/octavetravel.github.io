@@ -163,10 +163,14 @@
           const name = feature.getProperty("name");
           const isVisited = visitedCountries.includes(name);
           return {
-            strokeColor: isVisited && outlineVisible ? "black" : "grey",
-            strokeWeight: isVisited && outlineVisible ? 1 : 0,
-            fillOpacity: 0,
-          };
+              // Navy border contrasts sharply against light land, ocean, and terrain
+              strokeColor: isVisited && outlineVisible ? "#13273F" : "#A0A0A0",
+              strokeWeight: isVisited && outlineVisible ? 1.5 : 0.5,
+              
+              // Low opacity fill colors the country without hiding map labels or city dots
+              fillColor: isVisited && outlineVisible ? "#13273F" : "transparent",
+              fillOpacity: isVisited && outlineVisible ? 0.18 : 0,
+                };
         }
         // Apply initial style
         map.data.setStyle(styleFeature);
